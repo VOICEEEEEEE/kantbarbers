@@ -1236,6 +1236,11 @@
       border: 1.5px solid var(--gold);
       background: linear-gradient(145deg, var(--bg-card) 0%, rgba(201, 160, 96, 0.04) 100%);
     }
+    [data-theme="light"] .service-card.highlight {
+      border: 1.5px solid var(--gold);
+      background: linear-gradient(145deg, #FFFFFF 0%, rgba(212, 163, 115, 0.14) 100%);
+      box-shadow: 0 8px 24px rgba(181, 132, 85, 0.16);
+    }
 
     .card-badge-popular {
       position: absolute;
@@ -2734,9 +2739,59 @@
     }
 
     /* ── Promotions Section ── */
+    @keyframes promo-gold-shimmer {
+      0% { transform: translateX(-140%) skewX(-18deg); opacity: 0; }
+      18% { opacity: 1; }
+      55% { transform: translateX(180%) skewX(-18deg); opacity: 1; }
+      70%, 100% { transform: translateX(180%) skewX(-18deg); opacity: 0; }
+    }
+    @keyframes promo-border-glow {
+      0%, 100% {
+        border-color: rgba(201, 160, 96, 0.42);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 0 18px rgba(201, 160, 96, 0.18);
+      }
+      50% {
+        border-color: rgba(224, 193, 135, 0.85);
+        box-shadow: 0 14px 38px rgba(0, 0, 0, 0.52), 0 0 32px rgba(224, 193, 135, 0.34);
+      }
+    }
+    @keyframes promo-border-glow-light {
+      0%, 100% {
+        border-color: rgba(181, 132, 85, 0.45);
+        box-shadow: 0 10px 26px rgba(74, 53, 40, 0.12), 0 0 16px rgba(212, 163, 115, 0.22);
+      }
+      50% {
+        border-color: rgba(181, 132, 85, 0.9);
+        box-shadow: 0 14px 34px rgba(74, 53, 40, 0.18), 0 0 28px rgba(212, 163, 115, 0.42);
+      }
+    }
     #promos {
       position: relative;
-      background: var(--bg-body);
+      background: radial-gradient(ellipse at 50% 0%, rgba(201, 160, 96, 0.14) 0%, rgba(201, 160, 96, 0.04) 45%, var(--bg-body) 80%);
+      border-top: 1px solid rgba(201, 160, 96, 0.28);
+      border-bottom: 1px solid rgba(201, 160, 96, 0.28);
+      overflow: hidden;
+    }
+    #promos::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 20%, rgba(224, 193, 135, 0.08) 45%, rgba(201, 160, 96, 0.14) 50%, rgba(224, 193, 135, 0.08) 55%, transparent 80%);
+      background-size: 220% 100%;
+      animation: shimmer 7s linear infinite;
+      pointer-events: none;
+    }
+    #promos .container {
+      position: relative;
+      z-index: 1;
+    }
+    #promos .section-title {
+      background: linear-gradient(90deg, var(--gold-light), #FFF3D6, var(--gold), var(--gold-light));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4.5s linear infinite;
     }
     .promos-grid {
       display: grid;
@@ -2752,26 +2807,44 @@
     }
     .promo-card {
       position: relative;
-      background: linear-gradient(145deg, rgba(34, 21, 14, 0.88) 0%, rgba(18, 11, 7, 0.95) 100%);
-      border: 1px solid rgba(212, 163, 115, 0.28);
+      background: linear-gradient(145deg, rgba(38, 24, 15, 0.94) 0%, rgba(18, 11, 7, 0.98) 100%);
+      border: 1.5px solid rgba(201, 160, 96, 0.45);
       border-radius: var(--radius-lg);
       padding: 24px 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: all var(--transition);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      animation: promo-border-glow 3.8s ease-in-out infinite;
       overflow: hidden;
     }
+    .promo-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 55%;
+      background: linear-gradient(115deg, transparent 0%, rgba(224, 193, 135, 0.14) 45%, rgba(245, 222, 179, 0.24) 50%, rgba(224, 193, 135, 0.14) 55%, transparent 100%);
+      animation: promo-gold-shimmer 4.2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .promo-card:nth-child(2)::before {
+      animation-delay: 1.2s;
+    }
+    .promo-card > * {
+      position: relative;
+      z-index: 1;
+    }
     .promo-card:hover {
-      border-color: rgba(212, 163, 115, 0.55);
+      border-color: var(--gold-light);
       transform: translateY(-3px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 163, 115, 0.15);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 28px rgba(224, 193, 135, 0.32);
     }
     .promo-card-featured {
-      border-color: rgba(212, 163, 115, 0.5);
-      background: linear-gradient(145deg, rgba(42, 26, 17, 0.92) 0%, rgba(22, 13, 8, 0.98) 100%);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 25px rgba(212, 163, 115, 0.12);
+      border-color: rgba(224, 193, 135, 0.65);
+      background: linear-gradient(145deg, rgba(48, 30, 18, 0.96) 0%, rgba(22, 13, 8, 0.99) 100%);
     }
     .promo-badge-hit {
       position: absolute;
@@ -2904,19 +2977,34 @@
     }
 
     /* Light Theme for Promos */
+    [data-theme="light"] #promos {
+      background: radial-gradient(ellipse at 50% 0%, rgba(212, 163, 115, 0.22) 0%, rgba(212, 163, 115, 0.08) 50%, var(--bg-body) 85%);
+      border-top-color: rgba(181, 132, 85, 0.32);
+      border-bottom-color: rgba(181, 132, 85, 0.32);
+    }
+    [data-theme="light"] #promos .section-title {
+      background: linear-gradient(90deg, #8E5A2D, #C9A060, #5E3A1B, #C9A060, #8E5A2D);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4.5s linear infinite;
+    }
     [data-theme="light"] .promo-card {
-      background: #FFFFFF !important;
-      border: 1px solid rgba(138, 90, 43, 0.22) !important;
-      box-shadow: 0 8px 24px rgba(74, 53, 40, 0.1) !important;
+      background: linear-gradient(145deg, #FFFFFF 0%, #FBF5EC 100%) !important;
+      border: 1.5px solid rgba(181, 132, 85, 0.45) !important;
+      animation: promo-border-glow-light 3.8s ease-in-out infinite !important;
+    }
+    [data-theme="light"] .promo-card::before {
+      background: linear-gradient(115deg, transparent 0%, rgba(212, 163, 115, 0.18) 45%, rgba(201, 160, 96, 0.32) 50%, rgba(212, 163, 115, 0.18) 55%, transparent 100%);
     }
     [data-theme="light"] .promo-card:hover {
-      border-color: rgba(138, 90, 43, 0.45) !important;
-      box-shadow: 0 14px 32px rgba(74, 53, 40, 0.18) !important;
+      border-color: rgba(142, 90, 45, 0.75) !important;
+      box-shadow: 0 14px 32px rgba(74, 53, 40, 0.18), 0 0 24px rgba(212, 163, 115, 0.35) !important;
     }
     [data-theme="light"] .promo-card-featured {
-      background: linear-gradient(145deg, #FFFFFF 0%, #FAF6F1 100%) !important;
-      border-color: rgba(184, 134, 11, 0.5) !important;
-      box-shadow: 0 10px 28px rgba(74, 53, 40, 0.14) !important;
+      background: linear-gradient(145deg, #FFFFFF 0%, #F8EFE1 100%) !important;
+      border-color: rgba(181, 132, 85, 0.7) !important;
     }
     [data-theme="light"] .promo-title {
       color: #1F140E !important;
@@ -3622,7 +3710,8 @@
           </div>
         </div>
 
-        <div class="service-card reveal" data-cat="hair">
+        <div class="service-card highlight reveal" data-cat="hair">
+          <div class="card-badge-popular">★ ОСНОВА KANT</div>
           <div class="service-row">
             <div class="service-name">Мужская стрижка</div>
             <div class="service-price">1 300 ₽</div>
@@ -4191,6 +4280,7 @@
 
     function declineCookies() {
       try { localStorage.setItem('kant_cookies_choice', 'declined'); } catch(e){}
+      window['disableYaCounter114670655'] = true;
       var b = document.getElementById('cookieBanner');
       if (b) b.style.display = 'none';
     }
@@ -4279,13 +4369,58 @@
   <!-- ═══ COOKIE BANNER (152-ФЗ) ═══ -->
   <div class="cookie-banner" id="cookieBanner">
     <div class="cookie-content">
-      <span>🍪 Мы сохраняем настройки оформления в браузере и с вашего согласия загружаем карту Яндекс.Карт. Подробнее — в <a href="privacy.html">Политике обработки ПДн</a> и <a href="consent.html">Согласии на обработку ПДн</a>.</span>
+      <span>🍪 Мы используем файлы cookie и сервис веб-аналитики Яндекс.Метрика для удобства пользователей и оценки посещаемости. Подробнее — в <a href="privacy.html">Политике обработки ПДн</a> и <a href="consent.html">Согласии на обработку ПДн</a>.</span>
       <div class="cookie-actions">
         <button type="button" class="btn-cookie-decline" onclick="declineCookies()">Отказаться</button>
         <button type="button" class="btn-cookie-accept" onclick="acceptCookies()">Принять</button>
       </div>
     </div>
   </div>
+
+<!-- ======== Яндекс.Метрика — KANT Barber's ========
+     Номер счётчика указан ОДИН раз в переменной YM_COUNTER.
+     При смене счётчика правится только эта строка. -->
+<script type="text/javascript">
+var YM_COUNTER = 114670655;
+(function(){
+  var declined = false;
+  try {
+    declined = localStorage.getItem('kant_cookies_choice') === 'declined' &&
+               location.search.indexOf('_ym_debug=1') === -1;
+  } catch(e){}
+  if (declined) {
+    window['disableYaCounter' + YM_COUNTER] = true;
+    return;
+  }
+
+  (function(m,e,t,r,i,k,a){
+      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+  })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id='+YM_COUNTER, 'ym');
+
+  ym(YM_COUNTER, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer",
+      accurateTrackBounce:true, trackLinks:true, triggerEvent:true});
+
+  /* ---- Цели: клики по каналам записи ---- */
+  document.addEventListener('DOMContentLoaded',function(){
+    function goal(id){ if(window.ym){ ym(YM_COUNTER,'reachGoal',id); } }
+    document.addEventListener('click',function(e){
+      var a = e.target.closest ? e.target.closest('a') : null;
+      if(!a) return;
+      var href = a.getAttribute('href') || '';
+      if (href.indexOf('yclients.ru') !== -1)                                    goal('click_record');
+      else if (href.indexOf('t.me') !== -1)                                      goal('click_telegram');
+      else if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp') !== -1)  goal('click_whatsapp');
+      else if (href.indexOf('max.ru') !== -1)                                    goal('click_max');
+      else if (href.indexOf('tel:') === 0)                                       goal('click_phone');
+    }, true);
+  });
+})();
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114670655" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- ======== /Яндекс.Метрика ======== -->
 
 </body>
 </html>
