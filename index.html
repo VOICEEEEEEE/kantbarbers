@@ -499,6 +499,57 @@
     }
     .nav-link:hover::after { width: 100%; }
 
+    @keyframes nav-promo-glow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(201, 160, 96, 0.28), inset 0 0 8px rgba(201, 160, 96, 0.12);
+        border-color: rgba(201, 160, 96, 0.65);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(224, 193, 135, 0.65), inset 0 0 12px rgba(224, 193, 135, 0.25);
+        border-color: rgba(224, 193, 135, 0.95);
+      }
+    }
+    .nav-link-promo {
+      position: relative;
+      overflow: hidden;
+      padding: 6px 13px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, rgba(224, 193, 135, 0.22) 0%, rgba(201, 160, 96, 0.12) 50%, rgba(154, 116, 54, 0.22) 100%);
+      border: 1px solid rgba(201, 160, 96, 0.7);
+      color: var(--gold-light) !important;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(224, 193, 135, 0.45);
+      animation: nav-promo-glow 2.6s ease-in-out infinite;
+    }
+    .nav-link-promo::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 60%;
+      background: linear-gradient(115deg, transparent 0%, rgba(255, 243, 214, 0.35) 50%, transparent 100%);
+      animation: promo-gold-shimmer 3.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .nav-link-promo::after { display: none; }
+    .nav-link-promo:hover {
+      background: var(--gold-gradient);
+      color: #140D09 !important;
+      text-shadow: none;
+      transform: translateY(-1px);
+    }
+    [data-theme="light"] .nav-link-promo {
+      background: linear-gradient(135deg, rgba(212, 163, 115, 0.28) 0%, rgba(181, 132, 85, 0.16) 50%, rgba(212, 163, 115, 0.28) 100%);
+      border-color: rgba(142, 90, 45, 0.65);
+      color: #6B3F19 !important;
+      text-shadow: 0 0 8px rgba(212, 163, 115, 0.35);
+    }
+    [data-theme="light"] .nav-link-promo:hover {
+      background: var(--gold-gradient);
+      color: #140D09 !important;
+    }
+
     .header-actions {
       display: flex;
       align-items: center;
@@ -3204,7 +3255,7 @@
 
         <!-- Desktop Navigation Links -->
         <nav class="header-nav">
-          <a href="#promos" class="nav-link" style="color: var(--gold-light);">Акции %</a>
+          <a href="#promos" class="nav-link nav-link-promo">Акции %</a>
           <a href="#master" class="nav-link">О мастерах</a>
           <a href="#gallery" class="nav-link">Работы</a>
           <a href="#prices" class="nav-link">Услуги и цены</a>
